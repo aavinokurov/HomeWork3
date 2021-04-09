@@ -19,7 +19,8 @@ namespace Task1
         {
             Random rnd = new Random(); // Переменная для генирации случайных чисел
             int gameNumber = rnd.Next(12, 121); // Переменная для хранения игрового числа (задается случайно от 12 до 120)
-            int userTry; // Переменная для хранения числа выбранное игроком
+            int userTry = rnd.Next(2,5); // Переменная для хранения числа выбранное игроком
+            int playerTurn; // Переменная для хранения числа, выбранное игроком
             string[] nameGamers = new string[2]; // Переменная для хранения имен игроков
             int playerNumber = 0; // Номер игрока делавший ход
 
@@ -27,7 +28,7 @@ namespace Task1
             Console.WriteLine("Правила игры:");
             Console.WriteLine("В игре участвуют два игрока. " +
                               "В начале игры загадывается число от 12 до 120 (случайным образом). " +
-                              "Игроки по очереди выбирают число от 1 до 4. " +
+                              $"Игроки по очереди выбирают число от 1 до {userTry}. " +
                               "После этого вычитается заданное число из загаданного числа. " +
                               "Если после хода игрока загаданное число равняется нулю, то походивший игрок оказывается победителем.");
 
@@ -51,18 +52,22 @@ namespace Task1
             {                
                 Console.WriteLine($"Значение игрового числа: {gameNumber}"); // Вывод в консоль игрого числа
 
-                if (gameNumber < 4) // Если значение меньше 4, то вывести предупреждение
+                if (gameNumber < userTry) // Если значение меньше 4, то вывести предупреждение
                 {
                     Console.WriteLine("Если Вы введете число больше игрового числа, то Вы проиграете!");
                 }
 
-                Console.Write($"Ход {nameGamers[playerNumber]}: "); // Приглашаем игрока сделать ход
-                userTry = rnd.Next(1, 5); // Выбирается число для игрока
-                Console.WriteLine(userTry); // Выводиться выбранное число                             
-                
-                if (gameNumber - userTry > 0) // Проверка условия выхода из цикла
+                Console.WriteLine($"Ход {nameGamers[playerNumber]}. Введите число от 1 до {userTry}: "); // Приглашаем игрока сделать ход
+                playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
+                while (playerTurn < 1 || playerTurn > userTry) // Если игрок ввел неправильно число
                 {
-                    gameNumber -= userTry;
+                    Console.WriteLine($"{nameGamers[playerNumber]}, введите число от 1 до {userTry}: ");
+                    playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
+                }
+                
+                if (gameNumber - playerTurn > 0) // Проверка условия выхода из цикла
+                {
+                    gameNumber -= playerTurn;
                 }
                 else
                 {
@@ -77,7 +82,7 @@ namespace Task1
             }
 
             // Конец игры
-            if(gameNumber - userTry < 0) // Если последний игрок ввел число больше игрового числа, то победителем становится следующий игрок
+            if(gameNumber - playerTurn < 0) // Если последний игрок ввел число больше игрового числа, то победителем становится следующий игрок
             {
                 playerNumber++; // Передаем ход следующему игру
                 if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
@@ -85,6 +90,8 @@ namespace Task1
                     playerNumber = 0;
                 }
             }
+
+            Console.Clear(); // Очистить консоль от предыдущих записей
 
             // Поздравляем победителя
             Console.WriteLine($"Победил {nameGamers[playerNumber]}!!! Поздравляем!!!");
