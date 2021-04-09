@@ -48,13 +48,46 @@ namespace Task1
 
             // Начало игры
             while (true)
-            {
+            {                
                 Console.WriteLine($"Значение игрового числа: {gameNumber}"); // Вывод в консоль игрого числа
+
+                if (gameNumber < 4) // Если значение меньше 4, то вывести предупреждение
+                {
+                    Console.WriteLine("Если Вы введете число больше игрового числа, то Вы проиграете!");
+                }
+
                 Console.Write($"Ход {nameGamers[playerNumber]}: "); // Приглашаем игрока сделать ход
                 userTry = rnd.Next(1, 5); // Выбирается число для игрока
-                Console.WriteLine(userTry); // Выводиться выбранное число
-                break;
+                Console.WriteLine(userTry); // Выводиться выбранное число                             
+                
+                if (gameNumber - userTry > 0) // Проверка условия выхода из цикла
+                {
+                    gameNumber -= userTry;
+                }
+                else
+                {
+                    break;
+                }
+
+                playerNumber++; // Передаем ход следующему игру
+                if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
+                {
+                    playerNumber = 0;
+                }
             }
+
+            // Конец игры
+            if(gameNumber - userTry < 0) // Если последний игрок ввел число больше игрового числа, то победителем становится следующий игрок
+            {
+                playerNumber++; // Передаем ход следующему игру
+                if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
+                {
+                    playerNumber = 0;
+                }
+            }
+
+            // Поздравляем победителя
+            Console.WriteLine($"Победил {nameGamers[playerNumber]}!!! Поздравляем!!!");
         }
     }
 }
