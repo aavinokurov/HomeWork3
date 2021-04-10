@@ -111,7 +111,7 @@ namespace Task2
 
                 if (gameNumber < userTry) // Если значение меньше userTry, то вывести предупреждение
                 {
-                    Console.WriteLine("Если Вы введете число больше игрового числа, то Вы проиграете!");
+                    Console.WriteLine("Если Вы введете число больше игрового числа, то Вы пропускаете ход!");
                 }
 
                 Console.WriteLine($"Ход {nameGamers[playerNumber]}. Введите число от 1 до {userTry}: "); // Приглашаем игрока сделать ход
@@ -126,21 +126,11 @@ namespace Task2
                 {
                     gameNumber -= playerTurn;
                 }
-                else
+                else if (gameNumber - playerTurn == 0)
                 {
                     break;
                 }
 
-                playerNumber++; // Передаем ход следующему игру
-                if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
-                {
-                    playerNumber = 0;
-                }
-            }
-
-            // Конец игры
-            if (gameNumber - playerTurn < 0) // Если последний игрок ввел число больше игрового числа, то победителем становится следующий игрок
-            {
                 playerNumber++; // Передаем ход следующему игру
                 if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
                 {
