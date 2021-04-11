@@ -49,174 +49,193 @@ namespace Task3
 
             Console.Clear(); // Очистить консоль от предыдущих записей
 
-            // Выбор уровня сложности
-            Console.WriteLine("Выберите уровень сложности: 1-легкий, 2-сложный.");
-            gameLevel = Convert.ToInt32(Console.ReadLine()); // Считываем уровень сложности
-            while (gameLevel < 1 || gameLevel > 2) // Если уровень сложности введено неверно, просим повторить ввод
-            {
-                Console.WriteLine("Выберите уровень сложности: 1-легкий, 2-сложный.");
-                gameLevel = Convert.ToInt32(Console.ReadLine());
-            }
-
-            Console.Clear(); // Очистить консоль от предыдущих записей
-
-            // Ввод игрового числа
-            Console.WriteLine("Введите игровое число от 25 до 120.");
-            gameNumber = Convert.ToInt32(Console.ReadLine()); // Считываем игровое число
-            while (gameNumber < 25 || gameNumber > 120) // Если игровое число введено неверно, просим повторить ввод
-            {
-                Console.WriteLine("Введите игровое число от 25 до 120.");
-                gameNumber = Convert.ToInt32(Console.ReadLine());
-            }
-
-            Console.Clear(); // Очистить консоль от предыдущих записей
-
-            // Ввод диапазона
-            Console.WriteLine("Введите диапазон от 2 до х, где х не превышает 4.");
-            userTry = Convert.ToInt32(Console.ReadLine()); // Считываем диапазон
-            while (userTry < 2 || userTry > 4) // Если диапазон введено неверно, просим повторить ввод
-            {
-                Console.WriteLine("Введите диапазон от 2 до х, где х не превышает 4.");
-                userTry = Convert.ToInt32(Console.ReadLine());
-            }
-
-            Console.Clear(); // Очистить консоль от предыдущих записей
-
             // Начало игры
-            while (true)
+            while (true) // Цикл для реванша
             {
-                Console.WriteLine($"Значение игрового числа: {gameNumber}"); // Вывод в консоль игрого числа
 
-                if (gameNumber < userTry) // Если значение меньше 4, то вывести предупреждение
+                // Выбор уровня сложности
+                Console.WriteLine("Выберите уровень сложности: 1-легкий, 2-сложный.");
+                gameLevel = Convert.ToInt32(Console.ReadLine()); // Считываем уровень сложности
+                while (gameLevel < 1 || gameLevel > 2) // Если уровень сложности введено неверно, просим повторить ввод
                 {
-                    Console.WriteLine("Если Вы введете число больше игрового числа, то Вы пропускаете ход!");
+                    Console.WriteLine("Выберите уровень сложности: 1-легкий, 2-сложный.");
+                    gameLevel = Convert.ToInt32(Console.ReadLine());
                 }
 
-                Console.WriteLine($"Ход {nameGamers[playerNumber]}. Введите число от 1 до {userTry}: "); // Приглашаем игрока сделать ход
+                Console.Clear(); // Очистить консоль от предыдущих записей
 
-                if (playerNumber == 0) // Ход человека
+                // Ввод игрового числа
+                Console.WriteLine("Введите игровое число от 25 до 120.");
+                gameNumber = Convert.ToInt32(Console.ReadLine()); // Считываем игровое число
+                while (gameNumber < 25 || gameNumber > 120) // Если игровое число введено неверно, просим повторить ввод
                 {
-                    playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
-                    while (playerTurn < 1 || playerTurn > userTry) // Если игрок ввел неправильно число
+                    Console.WriteLine("Введите игровое число от 25 до 120.");
+                    gameNumber = Convert.ToInt32(Console.ReadLine());
+                }
+
+                Console.Clear(); // Очистить консоль от предыдущих записей
+
+                // Ввод диапазона
+                Console.WriteLine("Введите диапазон от 2 до х, где х не превышает 4.");
+                userTry = Convert.ToInt32(Console.ReadLine()); // Считываем диапазон
+                while (userTry < 2 || userTry > 4) // Если диапазон введено неверно, просим повторить ввод
+                {
+                    Console.WriteLine("Введите диапазон от 2 до х, где х не превышает 4.");
+                    userTry = Convert.ToInt32(Console.ReadLine());
+                }
+
+                Console.Clear(); // Очистить консоль от предыдущих записей
+
+                while (true) // Цикл основной игры
+                {
+                    Console.WriteLine($"Значение игрового числа: {gameNumber}"); // Вывод в консоль игрого числа
+
+                    if (gameNumber < userTry) // Если значение меньше 4, то вывести предупреждение
                     {
-                        Console.WriteLine($"{nameGamers[playerNumber]}, введите число от 1 до {userTry}: ");
+                        Console.WriteLine("Если Вы введете число больше игрового числа, то Вы пропускаете ход!");
+                    }
+
+                    Console.WriteLine($"Ход {nameGamers[playerNumber]}. Введите число от 1 до {userTry}: "); // Приглашаем игрока сделать ход
+
+                    if (playerNumber == 0) // Ход человека
+                    {
                         playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
+                        while (playerTurn < 1 || playerTurn > userTry) // Если игрок ввел неправильно число
+                        {
+                            Console.WriteLine($"{nameGamers[playerNumber]}, введите число от 1 до {userTry}: ");
+                            playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
+                        }
                     }
-                }
-                else // Ход компьютера
-                {
-                    if (gameLevel == 1) // Если простой уровень сложности
+                    else // Ход компьютера
                     {
-                        playerTurn = rnd.Next(2, userTry + 1); // Просто задавать случайное число от 2 до userTry
+                        if (gameLevel == 1) // Если простой уровень сложности
+                        {
+                            playerTurn = rnd.Next(2, userTry + 1); // Просто задавать случайное число от 2 до userTry
+                        }
+                        else // Если сложный уровень сложности
+                        {
+                            // К - компьюте, Ч - человек
+                            if (userTry == 2) // Если диапазон от 1 до 2
+                            {
+                                /*Игровая стратегия
+                                 *          0
+                                 * ---------------------
+                                 * К: 1            2
+                                 * --------------------
+                                 * Ч: 3            3
+                                 * ---------------------
+                                 * К: 4            5
+                                 * ---------------------
+                                 * Ч: 6            6
+                                 * --------------------
+                                 * К: 7            8
+                                 */
+                                switch (gameNumber)
+                                {
+                                    case 7:
+                                    case 4:
+                                    case 1: playerTurn = 1; break;
+                                    default: playerTurn = 2; break;
+                                }
+                            }
+
+                            if (userTry == 3) // Если диапазон от 1 до 3
+                            {
+                                /*Игровая стратегия
+                                *          0
+                                * ---------------------
+                                * К: 1      2       3
+                                * --------------------
+                                * Ч: 4      4       4
+                                * ---------------------
+                                * К: 5      6       7
+                                * ---------------------
+                                * Ч: 8       8      8
+                                * --------------------
+                                * К: 9     10      11
+                                */
+                                switch (gameNumber)
+                                {
+                                    case 9:
+                                    case 5:
+                                    case 1: playerTurn = 1; break;
+                                    case 10:
+                                    case 6:
+                                    case 2: playerTurn = 2; break;
+                                    default: playerTurn = 3; break;
+                                }
+                            }
+
+
+                            if (userTry == 4) // Если диапазон от 1 до 4
+                            {
+                                /*Игровая стратегия
+                                *          0
+                                * ---------------------
+                                * К: 1   2    3     4
+                                * --------------------
+                                * Ч: 5   5    5     5
+                                * ---------------------
+                                * К: 6   7    8     9
+                                * ---------------------
+                                * Ч: 10  10   10   10
+                                * --------------------
+                                * К: 11  12   13   14
+                                */
+                                switch (gameNumber)
+                                {
+                                    case 11:
+                                    case 6:
+                                    case 1: playerTurn = 1; break;
+                                    case 12:
+                                    case 7:
+                                    case 2: playerTurn = 2; break;
+                                    case 13:
+                                    case 8:
+                                    case 3: playerTurn = 3; break;
+                                    default: playerTurn = 4; break;
+                                }
+                            }
+                        }
+                        Console.WriteLine(playerTurn); // Вывод в консоль выбранное число компьютером
                     }
-                    else // Если сложный уровень сложности
+
+                    if (gameNumber - playerTurn > 0) // Проверка условия выхода из цикла
                     {
-                        // К - компьюте, Ч - человек
-                        if (userTry == 2) // Если диапазон от 1 до 2
-                        {
-                            /*Игровая стратегия
-                             *          0
-                             * ---------------------
-                             * К: 1            2
-                             * --------------------
-                             * Ч: 3            3
-                             * ---------------------
-                             * К: 4            5
-                             * ---------------------
-                             * Ч: 6            6
-                             * --------------------
-                             * К: 7            8
-                             */
-                            switch (gameNumber)
-                            {
-                                case 7:
-                                case 4:
-                                case 1: playerTurn = 1; break;
-                                default: playerTurn = 2; break;
-                            }
-                        }
-
-                        if (userTry == 3) // Если диапазон от 1 до 3
-                        {
-                            /*Игровая стратегия
-                            *          0
-                            * ---------------------
-                            * К: 1      2       3
-                            * --------------------
-                            * Ч: 4      4       4
-                            * ---------------------
-                            * К: 5      6       7
-                            * ---------------------
-                            * Ч: 8       8      8
-                            * --------------------
-                            * К: 9     10      11
-                            */
-                            switch (gameNumber) 
-                            {
-                                case 9:
-                                case 5:
-                                case 1: playerTurn = 1; break;
-                                case 10:
-                                case 6:
-                                case 2: playerTurn = 2; break;
-                                default: playerTurn = 3; break;
-                            }
-                        }
-
-
-                        if (userTry == 4) // Если диапазон от 1 до 4
-                        {
-                            /*Игровая стратегия
-                            *          0
-                            * ---------------------
-                            * К: 1   2    3     4
-                            * --------------------
-                            * Ч: 5   5    5     5
-                            * ---------------------
-                            * К: 6   7    8     9
-                            * ---------------------
-                            * Ч: 10  10   10   10
-                            * --------------------
-                            * К: 11  12   13   14
-                            */
-                            switch (gameNumber)
-                            {
-                                case 11:
-                                case 6:
-                                case 1: playerTurn = 1; break;
-                                case 12:
-                                case 7:
-                                case 2: playerTurn = 2; break;
-                                case 13:
-                                case 8:
-                                case 3: playerTurn = 3; break;
-                                default: playerTurn = 4; break;
-                            }
-                        }
+                        gameNumber -= playerTurn;
                     }
-                    Console.WriteLine(playerTurn); // Вывод в консоль выбранное число компьютером
+                    else if (gameNumber - playerTurn == 0)
+                    {
+                        break;
+                    }
+
+                    playerNumber++; // Передаем ход следующему игру
+                    if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
+                    {
+                        playerNumber = 0;
+                    }
                 }
 
-                if (gameNumber - playerTurn > 0) // Проверка условия выхода из цикла
+                Console.Clear(); // Очистить консоль от предыдущих записей
+
+                // Поздравляем победителя
+                Console.WriteLine($"Победил {nameGamers[playerNumber]}!!! Поздравляем!!!");
+
+                // Реванш
+                string answerRematch; // Ответ на реванш
+                do
                 {
-                    gameNumber -= playerTurn;
-                }
-                else if (gameNumber - playerTurn == 0)
+                    Console.WriteLine("Реванш (\"да\", \"нет\"): ");
+                    answerRematch = Console.ReadLine(); // Считываем ответ
+                } while (answerRematch != "да" && answerRematch != "нет"); // Считываем значение, пока игрок не ответит правильно
+
+                if (answerRematch == "нет") // Если игрок отказался от реванша, то завершить игру
                 {
                     break;
                 }
 
-                playerNumber++; // Передаем ход следующему игру
-                if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
-                {
-                    playerNumber = 0;
-                }
+                Console.Clear(); // Очищаем консоль
             }
-
-            Console.Clear(); // Очистить консоль от предыдущих записей
-
-            // Поздравляем победителя
-            Console.WriteLine($"Победил {nameGamers[playerNumber]}!!! Поздравляем!!!");
         }
     }
 }

@@ -48,43 +48,64 @@ namespace Task1
             Console.Clear(); // Очистить консоль от предыдущих записей
 
             // Начало игры
-            while (true)
-            {                
-                Console.WriteLine($"Значение игрового числа: {gameNumber}"); // Вывод в консоль игрого числа
-
-                if (gameNumber < userTry) // Если значение меньше 4, то вывести предупреждение
+            while (true) // Цикл для реванша
+            {
+                while (true) // Цикл основной игры
                 {
-                    Console.WriteLine("Если Вы введете число больше игрового числа, то Вы пропускаете ход!");
-                }
+                    Console.WriteLine($"Значение игрового числа: {gameNumber}"); // Вывод в консоль игрого числа
 
-                Console.WriteLine($"Ход {nameGamers[playerNumber]}. Введите число от 1 до {userTry}: "); // Приглашаем игрока сделать ход
-                playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
-                while (playerTurn < 1 || playerTurn > userTry) // Если игрок ввел неправильно число
-                {
-                    Console.WriteLine($"{nameGamers[playerNumber]}, введите число от 1 до {userTry}: ");
+                    if (gameNumber < userTry) // Если значение меньше 4, то вывести предупреждение
+                    {
+                        Console.WriteLine("Если Вы введете число больше игрового числа, то Вы пропускаете ход!");
+                    }
+
+                    Console.WriteLine($"Ход {nameGamers[playerNumber]}. Введите число от 1 до {userTry}: "); // Приглашаем игрока сделать ход
                     playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
+                    while (playerTurn < 1 || playerTurn > userTry) // Если игрок ввел неправильно число
+                    {
+                        Console.WriteLine($"{nameGamers[playerNumber]}, введите число от 1 до {userTry}: ");
+                        playerTurn = Convert.ToInt32(Console.ReadLine()); // Игрок вводит число
+                    }
+
+                    if (gameNumber - playerTurn > 0) // Проверка условия выхода из цикла
+                    {
+                        gameNumber -= playerTurn;
+                    }
+                    else if (gameNumber - playerTurn == 0)
+                    {
+                        break;
+                    }
+
+                    playerNumber++; // Передаем ход следующему игру
+                    if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
+                    {
+                        playerNumber = 0;
+                    }
                 }
 
-                if (gameNumber - playerTurn > 0) // Проверка условия выхода из цикла
+                Console.Clear(); // Очистить консоль от предыдущих записей
+
+                // Поздравляем победителя
+                Console.WriteLine($"Победил {nameGamers[playerNumber]}!!! Поздравляем!!!");
+
+                // Реванш
+                string answerRematch; // Ответ на реванш
+                do
                 {
-                    gameNumber -= playerTurn;
-                }
-                else if (gameNumber - playerTurn == 0)
+                    Console.WriteLine("Реванш (\"да\", \"нет\"): ");
+                    answerRematch = Console.ReadLine(); // Считываем ответ
+                } while (answerRematch != "да" && answerRematch != "нет"); // Считываем значение, пока игрок не ответит правильно
+
+                if (answerRematch == "нет") // Если игрок отказался от реванша, то завершить игру
                 {
                     break;
                 }
 
-                playerNumber++; // Передаем ход следующему игру
-                if (playerNumber == nameGamers.Length) // Если число больше кол-ва игроков, то передать ход первому игроку
-                {
-                    playerNumber = 0;
-                }
+                Console.Clear(); // Очищаем консоль
+
+                gameNumber = rnd.Next(12, 121); // После реванша задаем заново игровое число и диапазон
+                userTry = rnd.Next(2, 5);
             }
-
-            Console.Clear(); // Очистить консоль от предыдущих записей
-
-            // Поздравляем победителя
-            Console.WriteLine($"Победил {nameGamers[playerNumber]}!!! Поздравляем!!!");
         }
     }
 }
